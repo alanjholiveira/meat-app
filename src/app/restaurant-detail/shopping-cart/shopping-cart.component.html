@@ -14,8 +14,15 @@
     <div class="table-responsive" *ngIf="items().length">
         <table class="table">
           <tbody>        
-          <tr *ngFor="let item of items()">
-            <th>({{item.quantity}}x) {{item.menuItem.name}}</th>
+          <tr *ngFor="let item of items(); index as i">
+            <th>
+              <div *ngIf="i == 0" [@rowUnique]="rowUniqueState">
+                ({{item.quantity}}x) {{item.menuItem.name}}
+              </div>
+              <div *ngIf="i > 0" [@row]="rowState">
+                ({{item.quantity}}x) {{item.menuItem.name}}
+              </div>
+            </th>
             <td class="text-right">{{item.value() | currency: 'BRL': true}}</td>
             <td class="text-right">
               <a (click)="removeItem(item)" class="btn btn-sm danger">
